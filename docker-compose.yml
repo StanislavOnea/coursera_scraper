@@ -14,7 +14,7 @@ services:
 
   scraper:
     build:
-      context: ./scraper
+      context: .
     image: scraper-image:tag
     ports:
     - "8001:8001"

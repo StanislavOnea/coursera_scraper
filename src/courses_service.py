@@ -1,20 +1,16 @@
-from adapters.orm import Course
+from orm import Course
 import time
 
 class SaveCourseraCoursesHandler:
     @staticmethod
     async def handle(repository, scraper):
-        # for course in scraper.generate_scraped_courses():
-        #     repository.add(Course(**course.dict()))
-        # repository.commit()
-        s = time.time()
+        counter = 0
         try:
             async for course in scraper.scrape_courses():
                 repository.add(Course(**course.dict()))
-                print(f"saved {course.name}")
+                counter += 1
+                if counter == 10:
+                    await repository.commit()
+            await repository.commit()
         finally:
             await scraper.http_client.session.close()
-
-        e = time.time()
-
-        print(f"Time is {e - s}")

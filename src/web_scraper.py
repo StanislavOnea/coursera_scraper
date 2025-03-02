@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-from model.courses import Course
+from course import Course
 import re
 from typing import AsyncGenerator, Protocol
 import aiohttp
@@ -230,6 +230,6 @@ class CourseraScraper:
             print(f"Error processing page {page_number}: {str(e)}")
 
     async def scrape_courses(self) -> AsyncGenerator[Course, None]:
-        for page in range(1, 10):
+        for page in range(1, 2):
             async for course in self._scrape_page(page):
                 yield course
